@@ -68,8 +68,11 @@ src_configure() {
 src_install() {
 	cmake_src_install
 	dosym ../../${PN}/data/doc /usr/share/doc/${PF}/html
-	mkdir -pv "${ED}"/usr/share/metainfo
-	[ -d "${ED}"/usr/share/appdata ] && mv -v "${ED}"/usr/share/{appdata/*,metainfo}
+	if [[ -d "${ED}"/usr/share/appdata ]]; then
+		mkdir -pv "${ED}"/usr/share/metainfo
+		mv -v "${ED}"/usr/share/{appdata/*,metainfo}
+		rmdir "${ED}"/usr/share/appdata
+	fi
 }
 
 pkg_postinst() {
