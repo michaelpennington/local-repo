@@ -1,0 +1,19 @@
+diff '--color=auto' -Naur octave-7.3.0/liboctave/util/oct-sparse.h octave-7.3.0-patches/liboctave/util/oct-sparse.h
+--- octave-7.3.0/liboctave/util/oct-sparse.h	2022-11-02 14:19:56.000000000 -0400
++++ octave-7.3.0-patches/liboctave/util/oct-sparse.h	2023-02-22 00:35:04.630319491 -0500
+@@ -92,7 +92,14 @@
+ // Cope with new SuiteSparse versions
+ 
+ #if defined (SUITESPARSE_VERSION)
+-#  if (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (4, 3))
++#  if (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (7, 0))
++#    define SUITESPARSE_NAME(name) SuiteSparse_ ## name
++#    define SUITESPARSE_SET_FCN(name) SuiteSparse_config_ ## name ## _set
++#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) \
++       SUITESPARSE_SET_FCN(f_name) (f_assign)
++#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) \
++       SUITESPARSE_SET_FCN(f_name) (SUITESPARSE_NAME (f_assign))
++#  elif (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (4, 3))
+ #    define SUITESPARSE_NAME(name) SuiteSparse_ ## name
+ #    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) (SuiteSparse_config.f_name = f_assign)
+ #    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) (SuiteSparse_config.f_name = SUITESPARSE_NAME (f_assign))
