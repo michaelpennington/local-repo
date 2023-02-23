@@ -1,0 +1,31 @@
+diff '--color=auto' -Naur wineasio/Makefile.mk wineasio-1.1.0/Makefile.mk
+--- wineasio/Makefile.mk	2022-02-17 15:55:26.000000000 -0500
++++ wineasio-1.1.0/Makefile.mk	2023-02-23 12:04:45.604164439 -0500
+@@ -21,8 +21,8 @@
+ ### Tools
+ 
+ CC        = gcc
+-WINEBUILD = winebuild
+-WINECC    = winegcc
++WINEBUILD = winebuild-proton-7.0.6
++WINECC    = winegcc-proton-7.0.6
+ 
+ ### Common settings
+ 
+@@ -32,14 +32,8 @@
+ CEXTRA               += $(shell pkg-config --cflags jack)
+ RCEXTRA               =
+ INCLUDE_PATH          = -I. -Irtaudio/include
+-INCLUDE_PATH         += -I$(PREFIX)/include/wine
+-INCLUDE_PATH         += -I$(PREFIX)/include/wine/windows
+-INCLUDE_PATH         += -I$(PREFIX)/include/wine-development
+-INCLUDE_PATH         += -I$(PREFIX)/include/wine-development/wine/windows
+-INCLUDE_PATH         += -I/opt/wine-stable/include
+-INCLUDE_PATH         += -I/opt/wine-stable/include/wine/windows
+-INCLUDE_PATH         += -I/opt/wine-staging/include
+-INCLUDE_PATH         += -I/opt/wine-staging/include/wine/windows
++INCLUDE_PATH         += -I$(PREFIX)/include/wine/wine
++INCLUDE_PATH         += -I$(PREFIX)/include/wine/wine/windows
+ LIBRARIES             = $(shell pkg-config --libs jack)
+ 
+ # 64bit build needs an extra flag
