@@ -1,0 +1,23 @@
+diff --git a/src/ui/widget/selected-style.cpp b/src/ui/widget/selected-style.cpp
+index 68fe1fc426a9e447984a2ebe08f93f3f132ab0e9..11fd2424cdb2e6cd72b17bd986fe476c394c44e7 100644
+--- a/src/ui/widget/selected-style.cpp
++++ b/src/ui/widget/selected-style.cpp
+@@ -100,14 +100,10 @@ enum ui_drop_target_info {
+     APP_OSWB_COLOR
+ };
+ 
+-//TODO: warning: deprecated conversion from string constant to ‘gchar*’
+-//
+-//Turn out to be warnings that we should probably leave in place. The
+-// pointers/types used need to be read-only. So until we correct the using
+-// code, those warnings are actually desired. They say "Hey! Fix this". We
+-// definitely don't want to hide/ignore them. --JonCruz
+-static const GtkTargetEntry ui_drop_target_entries [] = {
+-    {g_strdup("application/x-oswb-color"), 0, APP_OSWB_COLOR}
++static const GtkTargetEntry ui_drop_target_entries[] = {
++    // clang-format off
++    {(gchar *)"application/x-oswb-color", 0, APP_OSWB_COLOR}
++    // clang-format on
+ };
+ 
+ static guint nui_drop_target_entries = G_N_ELEMENTS(ui_drop_target_entries);
