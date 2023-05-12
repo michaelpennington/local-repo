@@ -1,0 +1,12 @@
+diff --git a/plugins/surgext/surge/src/common/SkinColors.h b/plugins/surgext/surge/src/common/SkinColors.h
+index f4a12b6a..7def86ef 100644
+--- a/plugins/surgext/surge/src/common/SkinColors.h
++++ b/plugins/surgext/surge/src/common/SkinColors.h
+@@ -2,6 +2,7 @@
+ 
+ #include <string>
+ #include <vector>
++#include <cstdint>
+ 
+ /*
+  * For a discussion of why this is in src/common rather than src/common/gui
