@@ -180,7 +180,11 @@ CRATES="
 	zeroize_derive@1.4.2
 "
 
-inherit cargo
+_P="innernet-${PV}"
+
+inherit cargo shell-completion systemd
+
+IUSE="systemd"
 
 DESCRIPTION="A server to coordinate innernet networks."
 # Double check the homepage as the cargo_metadata crate
@@ -189,7 +193,7 @@ HOMEPAGE="https://github.com/tonarino/innernet"
 SRC_URI="https://github.com/tonarino/innernet/archive/refs/tags/v${PV}.tar.gz
 ${CARGO_CRATE_URIS}"
 
-S="${WORKDIR}/innernet-${PV}/server"
+S="${WORKDIR}/${_P}/server"
 
 # License set may be more restrictive as OR is not respected
 # use cargo-license for a more accurate license picture
@@ -197,10 +201,24 @@ LICENSE="Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD BSD-1 Boost-1.0 LGPL-2.1
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND=""
+DEPEND=">=dev-db/sqlite-3.43.2
+		>=sys-devel/clang-17.0.3"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
 # rust does not use *FLAGS from make.conf, silence portage warning
 # update with proper path to binaries this crate installs, omit leading /
 QA_FLAGS_IGNORED="usr/bin/${PN}"
+
+src_install() {
+	cd "${WORKDIR}/${_P}"
+	if use systemd ; then
+		systemd_dounit "server/${PN}@.service"
+	fi
+	newbashcomp "doc/${PN}.completions.bash" "${PN}"
+	newfishcomp "doc/${PN}.completions.fish" "${PN}.fish"
+	newzshcomp "doc/${PN}.completions.zsh" "_${PN}"
+	doman "doc/${PN}.8"
+
+	cargo_src_install --path "./server"
+}
