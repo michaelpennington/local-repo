@@ -98,6 +98,7 @@ src_compile() {
 		PREFIX="${EPREFIX}"/usr \
 		SKIP_STRIPPING=true \
 		SYSDEPS=true \
+		HAVE_LIBLO=false \
 		WITH_LTO=$(usex lto "true" "false") \
 		HEADLESS=$(usex gui "false" "true")
 }
