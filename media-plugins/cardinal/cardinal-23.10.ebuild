@@ -67,7 +67,7 @@ DEPEND="
 
 BDEPEND="
 	${PYTHON_DEPS}
-	>=dev-util/cmake-3.25.2
+	>=dev-build/cmake-3.25.2
 	jack? ( >=dev-util/gendesk-1.0.9 )
 "
 
